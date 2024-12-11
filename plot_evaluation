@@ -1,0 +1,37 @@
+# File which aggregates the dataset results into a single file and comparable plot
+
+# Load the required libraries
+library(ggplot2)
+library(dplyr)
+library(readr)
+library(xtable)
+
+# Create a custom theme
+custom_theme <- theme_minimal(base_size = 15)
+
+# Load performance metrics
+fldrs <- c("ausprivate","fretmtpl","swmotor","brveh")
+models <- c("base","Detrimental","LindskogNazar")
+results <- data.frame()
+for (fldr in fldrs){
+    for (model in models){
+        file <- paste("results/",fldr,"/",model,"_metrics.csv",sep="")
+        data <- read.csv(file)
+        data$model <- model
+        data$dataset <- fldr
+        results <- rbind(results,data)
+    }
+}
+
+results
+
+# Create table for each metrics
+metrics <- c("deviance", "mse", "mae")
+for (metric in metrics){
+    # Multiply by n
+    results$Value <- results[[metric]] * results$n
+    long_data <- results %>% select(model, dataset, Value)
+    wide_data <- long_data %>% pivot_wider(names_from = model, values_from = Value)
+    print(xtable(wide_data, digits = 0, include.rownames = FALSE))
+
+}
