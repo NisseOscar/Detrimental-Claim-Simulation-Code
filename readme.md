@@ -1,0 +1,5 @@
+# Reassess the duration effect
+This repo contains code for running and replicating the results from the paper "Reassessing the duration effect"
+
+## Abstract
+Assuming that the observed duration of a non-life insurance policy is linear towards the underlying risk has been shown to induce spurious over-dispersion.This over-dispersion can distort pricing models and introduce variance where there is none.This paper shows through simulation that said over-dispersion may arise from \textit{detrimental claims} which are claims that are severe enough that they cancel the need for coverage  and in effect. the insurance policy.Further, through parametric assumptions on duration, a method of adjusting detrimental claims is proposed.This method shows to remove over-dispersion and maintain accurate model estimates in a simulated setting with improved performance in an applied setting. 
