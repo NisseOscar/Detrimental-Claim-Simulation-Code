@@ -49,5 +49,11 @@ p <- ggplot(aggdata, aes(x = percentile, y = rho_hat_p_avg, colour = dataset)) +
 ggsave("results/plots/DispersionDifferences.png", plot = p, width = 12, height = 9, units = "in", dpi = 300)
 
 
+phi <- qnorm(0.975)
 xtable(aggdata %>% group_by(dataset) %>% 
-    summarise( mean(rho_hat_p_avg),mean(rho_bar_avg),mean(rho_tilde_avg)))
+    summarise( 
+        mean(rho_hat_p_avg),phi*sd(rho_hat_p_avg)/sqrt(length(rho_hat_p_avg)),
+        mean(rho_bar_avg),phi*sd(rho_bar_avg)/sqrt(length(rho_hat_p_avg)),
+        mean(rho_tilde_avg),phi*sd(rho_tilde_avg)/sqrt(length(rho_hat_p_avg))
+    )
+)
